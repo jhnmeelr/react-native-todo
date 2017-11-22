@@ -8,6 +8,7 @@ export default class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      allComplete: false,
       value: '',
       items: [],
     };
@@ -23,6 +24,14 @@ export default class App extends Component {
     this.setState({ items: [ ...items, item ], value: '' });
   }
 
+  handleToggleAllComplete = () => {
+    const { allComplete, items } = this.state;
+    const complete = !allComplete;
+    const newItems = items.map((item) => ({ ...item, complete }));
+
+    this.setState({ items: newItems, complete });
+  }
+
   handleChange = (value) => {
     this.setState({ value });
   }
@@ -36,6 +45,7 @@ export default class App extends Component {
           value={value}
           onAddItem={this.handleAddItem}
           onChange={this.handleChange}
+          onToggleAllComplete={this.handleToggleAllComplete}
         />
         <View style={styles.content}>
 
