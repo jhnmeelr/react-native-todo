@@ -13,8 +13,6 @@
   },
 
   "plugins": [
-    "flowtype",
-    "prettier",
     "react"
   ],
 
@@ -57,11 +55,6 @@
   },
 
   "rules": {
-  // Flow Plugin
-  // The following rules are made available via `eslint-plugin-flowtype`
-    "flowtype/define-flow-type": 1,
-    "flowtype/use-flow-type": 1,
-
   // General
 
     // This must be disallowed in this repo because the minimum supported
@@ -173,10 +166,6 @@
     "no-process-exit": 0,            // disallow process.exit() (on by default in the node environment)
     "no-restricted-modules": 1,      // restrict usage of specified node modules (off by default)
     "no-sync": 0,                    // disallow use of synchronous methods (off by default)
-
-  // Prettier Plugin
-  // https://github.com/prettier/eslint-plugin-prettier
-    "prettier/prettier": [2, "fb", "@format"],
 
   // Stylistic Issues
   // These rules are purely matters of style and are quite subjective.
