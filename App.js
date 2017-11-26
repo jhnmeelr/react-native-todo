@@ -65,14 +65,33 @@ export default class App extends Component {
     this.setSource(newItems, filterItems(filter, newItems));
   }
 
+  handleUpdateText = (key, text) => {
+    const { items, filter } = this.state;
+    const newItems = items.map((item) => {
+      if (item.key !== key) return item;
+
+      return { ...item, text };
+    });
+
+    this.setSource(newItems, filterItems(filter, newItems));
+  }
+
+  handleToggleEditing = (key, editing) => {
+    const { items, filter } = this.state;
+    const newItems = items.map((item) => {
+      if (item.key !== key) return item;
+
+      return { ...item, editing };
+    });
+
+    this.setSource(newItems, filterItems(filter, newItems));
+  }
+
   handleToggleComplete = (key, complete) => {
     const newItems = this.state.items.map((item) => {
       if (item.key !== key) return item;
 
-      return {
-        ...item,
-        complete
-      };
+      return { ...item, complete };
     });
 
     this.setSource(newItems, newItems);
@@ -110,6 +129,8 @@ export default class App extends Component {
   renderRow = ({ key, ...value }) => (
     <Row
       key={key}
+      onUpdate={(text) => this.handleUpdateText(key, text)}
+      onToggleEdit={(editing) => this.handleToggleEditing(key, editing)}
       onRemove={() => this.handleRemoveItem(key)}
       onComplete={(complete) => this.handleToggleComplete(key, complete)}
       {...value}
