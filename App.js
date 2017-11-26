@@ -98,7 +98,7 @@ export default class App extends Component {
   renderSeparator = (sectionId, rowId) => <View key={rowId} style={styles.separator} />
 
   render() {
-    const { filter, value, dataSource } = this.state;
+    const { items, filter, value, dataSource } = this.state;
 
     return (
       <View style={styles.container}>
@@ -118,7 +118,11 @@ export default class App extends Component {
             renderSeparator={this.renderSeparator}
           />
         </View>
-        <Footer filter={filter} onFilter={this.handleFilter} />
+        <Footer
+          count={filterItems('ACTIVE', items).length}
+          filter={filter}
+          onFilter={this.handleFilter}
+        />
       </View>
     );
   }

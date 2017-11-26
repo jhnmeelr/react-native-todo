@@ -4,10 +4,11 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 
 export default class Footer extends Component {
   render() {
-    const { filter, onFilter } = this.props;
+    const { filter, count, onFilter } = this.props;
 
     return (
       <View style={styles.container}>
+        <Text>{count} count</Text>
         <View style={styles.filters}>
           <TouchableOpacity style={[styles.filter, filter === 'ALL' && styles.selected]} onPress={() => onFilter('ALL')}>
             <Text>All</Text>
