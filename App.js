@@ -44,6 +44,13 @@ export default class App extends Component {
     this.setSource(items, filterItems(filter, items), { filter });
   }
 
+  handleClearComplete = () => {
+    const { filter, items } = this.state;
+    const newItems = filterItems('ACTIVE', items);
+
+    this.setSource(newItems, filterItems(filter, newItems));
+  }
+
   handleToggleComplete = (key, complete) => {
     const newItems = this.state.items.map((item) => {
       if (item.key !== key) return item;
@@ -122,6 +129,7 @@ export default class App extends Component {
           count={filterItems('ACTIVE', items).length}
           filter={filter}
           onFilter={this.handleFilter}
+          onClearComplete={this.handleClearComplete}
         />
       </View>
     );
