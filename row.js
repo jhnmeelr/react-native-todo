@@ -1,14 +1,20 @@
 import React, { Component } from 'react';
 
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Switch } from 'react-native';
 
 export default class Row extends Component {
   render() {
-    const { text } = this.props;
+    const { text, complete, onComplete } = this.props;
 
     return (
       <View style={styles.container}>
-        <Text style={styles.text}>{text}</Text>
+        <Switch
+          value={complete}
+          onValueChange={onComplete}
+        />
+        <View style={styles.textWrap}>
+          <Text style={[styles.text, complete && styles.complete]}>{text}</Text>
+        </View>
       </View>
     );
   }
@@ -20,6 +26,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'flex-start',
     justifyContent: 'space-between',
+  },
+  textWrap: {
+    flex: 1,
+    marginHorizontal: 10,
+  },
+  complete: {
+    textDecorationLine: 'line-through',
   },
   text: {
     fontSize: 24,

@@ -29,6 +29,19 @@ export default class App extends Component {
     });
   }
 
+  handleToggleComplete = (key, complete) => {
+    const newItems = this.state.items.map((item) => {
+      if (item.key !== key) return item;
+
+      return {
+        ...item,
+        complete
+      };
+    });
+
+    this.setSource(newItems, newItems);
+  }
+
   handleAddItem = () => {
     const { value, items } = this.state;
     if (!value) return;
@@ -51,7 +64,13 @@ export default class App extends Component {
     this.setState({ value });
   }
 
-  renderRow = ({ key, ...value }) => <Row key={key} {...value} />
+  renderRow = ({ key, ...value }) => (
+    <Row
+      key={key}
+      onComplete={(complete) => this.handleToggleComplete(key, complete)}
+      {...value}
+    />
+  )
 
   renderSeparator = (sectionId, rowId) => <View key={rowId} style={styles.separator} />
 
