@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Platform, ListView, Keyboard, AsyncStorage } from 'react-native';
+import { View, Text, StyleSheet, Platform, ListView, Keyboard, ActivityIndicator, AsyncStorage } from 'react-native';
 
 import Header from './header';
 import Footer from './footer';
@@ -20,6 +20,7 @@ export default class App extends Component {
     const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
 
     this.state = {
+      loading: true,
       allComplete: false,
       filter: 'ALL',
       value: '',
@@ -32,9 +33,9 @@ export default class App extends Component {
     AsyncStorage.getItem('items').then((json) => {
       try {
         const items = JSON.parse(json);
-        this.setSource(items, items);
+        this.setSource(items, items, { loading: false });
       } catch (e) {
-
+        this.setState({ loading: false });
       }
     });
   }
@@ -118,7 +119,7 @@ export default class App extends Component {
   renderSeparator = (sectionId, rowId) => <View key={rowId} style={styles.separator} />
 
   render() {
-    const { items, filter, value, dataSource } = this.state;
+    const { items, filter, value, dataSource, loading } = this.state;
 
     return (
       <View style={styles.container}>
@@ -144,6 +145,12 @@ export default class App extends Component {
           onFilter={this.handleFilter}
           onClearComplete={this.handleClearComplete}
         />
+        {loading && <View style={styles.loading}>
+          <ActivityIndicator
+            animating
+            size="large"
+          />
+        </View>}
       </View>
     );
   }
@@ -156,6 +163,16 @@ const styles = StyleSheet.create({
     ...Platform.select({
       ios: { paddingTop: 30 }
     })
+  },
+  loading: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'rgba(0, 0, 0, .2)',
   },
   content: {
     flex: 1
